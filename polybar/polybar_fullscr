@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Name of your bar instance
+BAR_NAME="mybar"
+
+# Check if any window is fullscreen
+FULLSCREEN=$(bspc query -N -n .fullscreen.window)
+
+if [ -n "$FULLSCREEN" ]; then
+    # Hide bar
+    polybar-msg cmd hide
+else
+    # Show bar
+    polybar-msg cmd show
+fi

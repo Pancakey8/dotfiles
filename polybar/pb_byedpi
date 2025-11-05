@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+byedpictl tun status | grep -E 'server:|tunnel:' | awk '{print $1 " " $2 ","}' | sed ':a;N;$!ba;s/\n/ /g;s/,$//'

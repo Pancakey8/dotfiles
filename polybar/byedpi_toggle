@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+export SUDO_ASKPASS=/usr/lib/ssh/ssh-askpass
+if byedpictl tun status | grep -q 'running'; then
+    notify-send "ByeDPI" "Stopping..."
+    sudo -A systemctl stop byedpi-start.service
+    sudo byedpictl tun stop
+else
+    notify-send "ByeDPI" "Starting..."
+    sudo -A systemctl start byedpi-start.service
+    sudo byedpictl tun start
+fi
