@@ -77,7 +77,7 @@
         lsp-prefer-flymake nil
         lsp-ui-doc-enable t
         lsp-ui-doc-delay 0.1
-        lsp-ui-doc-show-with-cursor t)
+        lsp-ui-doc-show-with-cursor nil)
   (define-key evil-normal-state-map (kbd "gd") #'lsp-find-definition)
   (define-key evil-normal-state-map (kbd "gi") #'lsp-find-implementation)
   (define-key evil-normal-state-map (kbd "SPC D") #'lsp-find-type-definition)
