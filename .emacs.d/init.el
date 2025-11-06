@@ -11,6 +11,31 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+(setq select-enable-clipboard nil)
+
+(use-package evil
+  :init
+  (setq evil-want-C-u-scroll t
+        evil-want-keybinding nil
+        evil-want-integration t)
+  :config
+  (evil-mode 1))
+
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))
+
+(use-package evil-surround
+  :after evil
+  :config
+  (global-evil-surround-mode 1))
+
+(use-package evil-commentary
+  :after evil
+  :config
+  (evil-commentary-mode 1))
+
 (use-package tree-sitter
   :hook (prog-mode . tree-sitter-mode)
   :config
@@ -37,8 +62,15 @@
 (use-package cmake-mode
   :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
 
+(use-package kotlin-mode
+  :mode ("\\.kt\\'"))
+
 (use-package lsp-mode
-  :hook ((c-mode c++-mode cmake-mode) . lsp)
+  :hook ((c-mode
+          c++-mode
+          cmake-mode
+          java-mode
+          kotlin-mode) . lsp)
   :commands lsp
   :config
   (setq lsp-clients-clangd-executable "clangd"
@@ -55,6 +87,11 @@
   (define-key evil-normal-state-map (kbd "SPC c a") #'lsp-execute-code-action)
   (define-key evil-normal-state-map (kbd "gr") #'lsp-find-references)
   (define-key evil-normal-state-map (kbd "SPC f") #'lsp-format-buffer))
+
+(use-package lsp-java
+  :ensure t
+  :config
+  (add-hook 'java-mode-hook #'lsp))
 
 (use-package lsp-ui
   :commands lsp-ui-mode)
@@ -128,40 +165,50 @@
   ([remap describe-variable] . helpful-variable)
   ([remap describe-command] . helpful-command))
 
-(use-package evil
-  :init
-  (setq evil-want-C-u-scroll t
-        evil-want-keybinding nil
-        evil-want-integration t)
-  :config
-  (evil-mode 1))
-
-(use-package evil-collection
-  :after evil
-  :config
-  (evil-collection-init))
-
-(use-package evil-surround
-  :after evil
-  :config
-  (global-evil-surround-mode 1))
-
-(use-package evil-commentary
-  :after evil
-  :config
-  (evil-commentary-mode 1))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages nil))
+ '(column-number-mode t)
+ '(display-line-numbers-type 'relative)
+ '(global-display-line-numbers-mode t)
+ '(menu-bar-mode nil)
+ '(package-selected-packages nil)
+ '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:background "#212121")))))
+
+(set-face-attribute 'default nil :family "Iosevka Nerd Font Mono" :height 120)
+
+(use-package ligature
+  :config
+  ;; Enable the "www" ligature in every possible major mode
+  (ligature-set-ligatures 't '("www"))
+  ;; Enable traditional ligature support in eww-mode, if the
+  ;; `variable-pitch' face supports it
+  (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+  ;; Enable all Cascadia Code ligatures in programming modes
+  (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                                       ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                                       "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                                       "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                                       "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                                       "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                                       "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                                       "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                                       ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                                       "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                                       "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                                       "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                                       "\\\\" "://"))
+  ;; Enables ligature checks globally in all buffers.  You can also do it
+  ;; per mode with `ligature-mode'.
+  (global-ligature-mode t))
 
 (use-package company
   :hook (prog-mode . company-mode)
