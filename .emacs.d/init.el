@@ -19,7 +19,8 @@
         evil-want-keybinding nil
         evil-want-integration t)
   :config
-  (evil-mode 1))
+  (evil-mode 1)
+  (evil-set-undo-system 'undo-redo))
 
 (use-package evil-collection
   :after evil
@@ -87,6 +88,15 @@
   (define-key evil-normal-state-map (kbd "SPC c a") #'lsp-execute-code-action)
   (define-key evil-normal-state-map (kbd "gr") #'lsp-find-references)
   (define-key evil-normal-state-map (kbd "SPC f") #'lsp-format-buffer))
+
+(use-package dap-mode
+  :hook (lsp-mode . dap-mode)
+  :config
+  (define-key evil-normal-state-map (kbd "SPC d t") #'dap-breakpoint-toggle)
+  (define-key evil-normal-state-map (kbd "SPC d C-d") #'dap-breakpoint-delete-all)
+  (define-key evil-normal-state-map (kbd "SPC d r") #'dap-debug)
+  (define-key evil-normal-state-map (kbd "SPC d R") #'dap-debug-restart)
+  (define-key evil-normal-state-map (kbd "SPC d q") #'dap-disconnect))
 
 (use-package lsp-java
   :ensure t
@@ -158,6 +168,11 @@
 (use-package embark
   :bind
   (("C-." . embark-act)))
+
+(use-package treemacs
+  :commands (treemacs)
+  :config
+  (define-key evil-normal-state-map (kbd "SPC t") #'treemacs))
 
 (use-package helpful
   :bind
