@@ -17,6 +17,9 @@ super + shift + @space
 super + Escape
 	pkill -USR1 -x sxhkd
 
+super + shift + Escape
+    kshutdown
+
 #
 # bspwm hotkeys
 #
@@ -37,7 +40,7 @@ super + m
 super + y
 	bspc node newest.marked.local -n newest.!automatic.local
 
-# swap the current node and the biggest window
+swap the current node and the biggest window
 super + g
 	bspc node -s biggest.window
 
@@ -145,11 +148,17 @@ XF86TouchpadToggle
 super + e
     thunar
 
-# Print
-#     flameshot gui
+Print
+    flameshot gui
+
+ctrl + Print
+    flameshot full -c
+
+# super + v
+#     bspc node -f | xargs -I{} bspc node {} --state hidden
 # 
-# ctrl + Print
-#     flameshot full -c
+# super + shift + v
+#     bspc node -f | xargs -I{} bspc node {} --state tiled
 
 # super + shift + g
 #     ~/games/show_games.sh

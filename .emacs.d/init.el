@@ -48,6 +48,10 @@
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 
+  (add-to-list 'major-mode-remap-alist '(ada-mode . ada-ts-mode))
+
+  (add-to-list 'tree-sitter-major-mode-language-alist '(ada-ts-mode . ada))
+
   (defun my/tree-sitter-ensure-language ()
     (unless (tree-sitter-language-available-p major-mode)
       (ignore-errors
@@ -66,12 +70,30 @@
 (use-package kotlin-mode
   :mode ("\\.kt\\'"))
 
+(use-package ada-ts-mode
+  :mode ("\\.adb\\'" "\\.ads\\'" "\\.gpr\\'")
+  :hook (lsp-managed-mode . (lambda ()
+                              (flycheck-add-next-checker 'lsp 'ada-alire))))
+
+(use-package flycheck
+  :config
+  (add-hook 'after-init-hook #'global-flycheck-mode)
+  (flycheck-define-checker ada-alire
+    "Check Ada code using `alr build`."
+    :command ("alr" "build")
+    :error-patterns
+    ((error line-start (file-name) ":" line ":" column ": error: " (message) line-end)
+     (warning line-start (file-name) ":" line ":" column ": warning: " (message) line-end))
+    :modes ada-ts-mode)
+  (add-to-list 'flycheck-checkers 'ada-alire))
+
 (use-package lsp-mode
   :hook ((c-mode
           c++-mode
           cmake-mode
           java-mode
-          kotlin-mode) . lsp)
+          kotlin-mode
+          ada-ts-mode) . lsp)
   :commands lsp
   :config
   (setq lsp-clients-clangd-executable "clangd"
