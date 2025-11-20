@@ -49,8 +49,10 @@
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 
   (add-to-list 'major-mode-remap-alist '(ada-mode . ada-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(gpr-ts-mode . ada-ts-mode))
 
   (add-to-list 'tree-sitter-major-mode-language-alist '(ada-ts-mode . ada))
+  (add-to-list 'tree-sitter-major-mode-language-alist '(gpr-ts-mode . gpr))
 
   (defun my/tree-sitter-ensure-language ()
     (unless (tree-sitter-language-available-p major-mode)
@@ -71,9 +73,12 @@
   :mode ("\\.kt\\'"))
 
 (use-package ada-ts-mode
-  :mode ("\\.adb\\'" "\\.ads\\'" "\\.gpr\\'")
+  :mode ("\\.adb\\'" "\\.ads\\'")
   :hook (lsp-managed-mode . (lambda ()
                               (flycheck-add-next-checker 'lsp 'ada-alire))))
+
+(use-package gpr-ts-mode
+  :mode ("\\.gpr\\'"))
 
 (use-package flycheck
   :config
@@ -83,7 +88,8 @@
     :command ("alr" "build")
     :error-patterns
     ((error line-start (file-name) ":" line ":" column ": error: " (message) line-end)
-     (warning line-start (file-name) ":" line ":" column ": warning: " (message) line-end))
+     (warning line-start (file-name) ":" line ":" column ": warning: " (message) line-end)
+     (info line-start (file-name) ":" line ":" column ": (style) " (message) line-end))
     :modes ada-ts-mode)
   (add-to-list 'flycheck-checkers 'ada-alire))
 
@@ -93,7 +99,8 @@
           cmake-mode
           java-mode
           kotlin-mode
-          ada-ts-mode) . lsp)
+          ada-ts-mode
+          gpr-ts-mode) . lsp)
   :commands lsp
   :config
   (setq lsp-clients-clangd-executable "clangd"
@@ -207,6 +214,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(TeX-view-program-selection
+   '(((output-dvi has-no-display-manager) "dvi2tty")
+     ((output-dvi style-pstricks) "dvips and gv") (output-dvi "xdvi")
+     (output-pdf "Okular") (output-html "xdg-open")))
  '(column-number-mode t)
  '(display-line-numbers-type 'relative)
  '(global-display-line-numbers-mode t)
@@ -253,3 +264,21 @@
   (setq company-minimum-prefix-length 1
         company-idle-delay 0.1)
   (global-set-key (kbd "C-SPC") #'company-complete))
+
+(use-package org
+  :mode (("\\.org\'" . org-mode))
+  :config
+  (plist-put org-format-latex-options :scale 1.5))
+
+(use-package auctex
+  :defer t
+  :ensure t
+  :hook (LaTeX-mode . company-mode)
+  :config
+  (defun my/latex-compile () (interactive) (TeX-command "LaTeX" 'TeX-master-file -1))
+  (define-key evil-normal-state-map (kbd "SPC l d") #'preview-document)
+  (define-key evil-normal-state-map (kbd "SPC l D") #'preview-clearout-document)
+  (define-key evil-normal-state-map (kbd "SPC l p") #'preview-at-point)
+  (define-key evil-normal-state-map (kbd "SPC l P") #'preview-clearout-at-point)
+  (define-key evil-normal-state-map (kbd "SPC l v") #'TeX-view)
+  (define-key evil-normal-state-map (kbd "SPC l c") #'my/latex-compile))
