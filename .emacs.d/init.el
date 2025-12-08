@@ -93,6 +93,12 @@
     :modes ada-ts-mode)
   (add-to-list 'flycheck-checkers 'ada-alire))
 
+(use-package haskell-mode
+  :mode ("\\.hs\\'"))
+
+(use-package lsp-haskell
+  :after haskell-mode)
+
 (use-package lsp-mode
   :hook ((c-mode
           c++-mode
@@ -100,7 +106,8 @@
           java-mode
           kotlin-mode
           ada-ts-mode
-          gpr-ts-mode) . lsp)
+          gpr-ts-mode
+          haskell-mode) . lsp)
   :commands lsp
   :config
   (setq lsp-clients-clangd-executable "clangd"
@@ -221,8 +228,15 @@
  '(column-number-mode t)
  '(display-line-numbers-type 'relative)
  '(global-display-line-numbers-mode t)
+ '(haskell-process-type 'cabal-repl)
+ '(lsp-haskell-formatting-provider "stylish-haskell")
  '(menu-bar-mode nil)
- '(package-selected-packages nil)
+ '(package-selected-packages
+   '(ada-ts-mode auctex cmake-mode company consult-lsp doom-themes embark
+                 evil-collection evil-commentary evil-surround flycheck
+                 gpr-ts-mode haskell-mode helpful kotlin-mode ligature
+                 lsp-haskell lsp-java lsp-ui magit marginalia orderless
+                 racket-mode tree-sitter-langs vertico))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -282,3 +296,13 @@
   (define-key evil-normal-state-map (kbd "SPC l P") #'preview-clearout-at-point)
   (define-key evil-normal-state-map (kbd "SPC l v") #'TeX-view)
   (define-key evil-normal-state-map (kbd "SPC l c") #'my/latex-compile))
+
+(use-package asm-mode
+  :mode ("\\.s\\'" . asm-mode)
+  :hook (asm-mode . (lambda ()
+                      (flycheck-mode 1)
+                      (electric-indent-local-mode -1)
+                      (setq-local comment-auto-fill-only-comments nil)
+                      (setq-local asm-electric-semicolon nil)
+                      (advice-add #'asm-comment :override #'self-insert-command)
+                      (advice-add #'asm-colon :override #'self-insert-command))))
