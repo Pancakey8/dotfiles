@@ -20,7 +20,11 @@
         evil-want-integration t)
   :config
   (evil-mode 1)
-  (evil-set-undo-system 'undo-redo))
+  (evil-set-undo-system 'undo-redo)
+  (defun minibuffer-paste-plus ()
+    (interactive)
+    (insert (evil-get-register ?+)))
+  (define-key minibuffer-local-map (kbd "C-c p") #'minibuffer-paste-plus))
 
 (use-package evil-collection
   :after evil
@@ -48,9 +52,6 @@
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 
-  (add-to-list 'major-mode-remap-alist '(ada-mode . ada-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(gpr-ts-mode . ada-ts-mode))
-
   (add-to-list 'tree-sitter-major-mode-language-alist '(ada-ts-mode . ada))
   (add-to-list 'tree-sitter-major-mode-language-alist '(gpr-ts-mode . gpr))
 
@@ -72,13 +73,13 @@
 (use-package kotlin-mode
   :mode ("\\.kt\\'"))
 
+(use-package gpr-ts-mode
+  :mode ("\\.gpr\\'"))
+
 (use-package ada-ts-mode
   :mode ("\\.adb\\'" "\\.ads\\'")
   :hook (lsp-managed-mode . (lambda ()
                               (flycheck-add-next-checker 'lsp 'ada-alire))))
-
-(use-package gpr-ts-mode
-  :mode ("\\.gpr\\'"))
 
 (use-package flycheck
   :config
@@ -99,6 +100,12 @@
 (use-package lsp-haskell
   :after haskell-mode)
 
+(use-package rust-mode
+  :mode ("\\.rs\\'"))
+
+(use-package zig-mode
+  :mode ("\\.zig\\'"))
+
 (use-package lsp-mode
   :hook ((c-mode
           c++-mode
@@ -107,7 +114,9 @@
           kotlin-mode
           ada-ts-mode
           gpr-ts-mode
-          haskell-mode) . lsp)
+          haskell-mode
+          rust-mode
+          zig-mode) . lsp)
   :commands lsp
   :config
   (setq lsp-clients-clangd-executable "clangd"
@@ -153,7 +162,7 @@
 
 (use-package doom-themes
   :config
-  (load-theme 'doom-one t)
+  (load-theme 'doom-opera t)
   (custom-set-faces
    '(default ((t (:background "#212121"))))))
 
@@ -229,14 +238,9 @@
  '(display-line-numbers-type 'relative)
  '(global-display-line-numbers-mode t)
  '(haskell-process-type 'cabal-repl)
- '(lsp-haskell-formatting-provider "stylish-haskell")
+ '(lsp-haskell-formatting-provider "ormolu")
  '(menu-bar-mode nil)
- '(package-selected-packages
-   '(ada-ts-mode auctex cmake-mode company consult-lsp doom-themes embark
-                 evil-collection evil-commentary evil-surround flycheck
-                 gpr-ts-mode haskell-mode helpful kotlin-mode ligature
-                 lsp-haskell lsp-java lsp-ui magit marginalia orderless
-                 racket-mode tree-sitter-langs vertico))
+ '(package-selected-packages nil)
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -245,7 +249,8 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:background "#212121")))))
 
-(set-face-attribute 'default nil :family "Iosevka Nerd Font Mono" :height 120)
+(set-face-attribute 'default nil :family "Iosevka Mono" :height 120)
+(setq display-line-numbers t)
 
 (use-package ligature
   :config
@@ -306,3 +311,47 @@
                       (setq-local asm-electric-semicolon nil)
                       (advice-add #'asm-comment :override #'self-insert-command)
                       (advice-add #'asm-colon :override #'self-insert-command))))
+
+(use-package markdown-preview-mode
+  :after markdown-mode)
+
+(use-package xterm-color
+  :hook (compilation-filter-hook . (lambda ()
+                                     (let ((inhibit-only-read t))
+                                       (ansi-color-apply-on-region compilation-filter-start (point)))))
+  :config
+  (setq compilation-environment '("TERM=xterm-256color")))
+
+(use-package company-math
+  :after company
+  :config
+  (setq TeX-input-method-fuzzy-match t)
+  (defvar my/tex-company-backend '(company-math-symbols-unicode))
+  (define-minor-mode my/tex-input-completion-mode
+    "Enable company Unicode completion when using TeX input method."
+    :lighter " TeX→"
+    (if my/tex-input-completion-mode
+        ;; activate: prepend backend buffer-locally
+        (setq-local company-backends
+                    (cons my/tex-company-backend
+                          (remove my/tex-company-backend company-backends)))
+      ;; deactivate: remove our backend
+      (setq-local company-backends
+                  (remove my/tex-company-backend company-backends))))
+  (defun my/maybe-enable-tex-company ()
+    (if (string= current-input-method "TeX")
+        (my/tex-input-completion-mode 1)
+      (my/tex-input-completion-mode 0)))
+  (add-hook 'input-method-activate-hook #'my/maybe-enable-tex-company)
+  (add-hook 'input-method-inactivate-hook #'my/maybe-enable-tex-company))
+
+(put 'set-goal-column 'disabled nil)
+
+(use-package iedit)
+
+(use-package evil-iedit-state
+  :after (iedit evil)
+  :hook (iedit-mode . evil-iedit-state))
+
+(provide 'init)
+;;; init.el ends here

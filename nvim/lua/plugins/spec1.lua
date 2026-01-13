@@ -141,5 +141,8 @@ return {
                 })
             end
         }
+    },
+    {
+        dir = "~/.config/nvim/stack-talk"
     }
 }
