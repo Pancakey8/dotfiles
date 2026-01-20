@@ -10,3 +10,5 @@ cp -r ~/.config/nvim/ .
 cp -r ~/.config/wallpaper.png .
 mkdir ./.emacs.d
 cp ~/.emacs.d/init.el ./.emacs.d/init.el
+mkdir ./.emacs.d.old
+cp ~/.emacs.d.old/init.el ./.emacs.d.old/init.el
