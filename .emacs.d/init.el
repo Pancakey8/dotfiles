@@ -281,8 +281,7 @@
   :hook (prog-mode . company-mode)
   :config
   (setq company-minimum-prefix-length 1
-        company-idle-delay 0.1)
-  (global-set-key (kbd "C-SPC") #'company-complete))
+        company-idle-delay 0.1))
 
 (use-package org
   :mode (("\\.org\'" . org-mode))
@@ -353,5 +352,16 @@
   :after (iedit evil)
   :hook (iedit-mode . evil-iedit-state))
 
+(use-package project-x
+  :load-path "~/.emacs.d/project-x/"
+  :after project
+  :config
+  (project-x-mode 1))
+
+(use-package poporg
+  :config
+  (define-key evil-normal-state-map (kbd "g\"") #'poporg-dwim))
+
 (provide 'init)
 ;;; init.el ends here
+(put 'downcase-region 'disabled nil)
