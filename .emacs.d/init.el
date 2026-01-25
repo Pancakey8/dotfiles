@@ -34,6 +34,14 @@
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode 1)
 
+; Indentation
+(setq-default indent-tabs-mode nil
+              tab-width 4
+              fill-column 80)
+
+; Disable tilde files
+(setq make-backup-files nil)
+
 ; Show column
 (column-number-mode 1)
 
@@ -54,6 +62,28 @@
 (global-set-key (kbd pan-leader-key) pan-leader-map)
 
 ;; Basic utilities
+; God mode
+(use-package god-mode
+  :bind (("<escape>" . god-mode-all)
+	 ("C-x C-1" . delete-other-windows)
+	 ("C-x C-2" . split-window-below)
+	 ("C-x C-3" . split-window-right)
+	 ("C-x C-0" . delete-window)
+	 :map god-local-mode-map
+	 ("z" . repeat))
+  :hook ((god-mode-enabled . my/god-mode-cursor)
+         (god-mode-disabled . my/god-mode-cursor))
+  :init (god-mode)
+  :config
+  (defun my/god-mode-cursor ()
+    (if god-local-mode
+        (progn
+          (set-cursor-color (face-attribute 'warning :foreground)))
+      (progn
+        (set-cursor-color (face-attribute 'default :foreground)))))
+  (setq god-exempt-major-modes nil)
+  (setq god-exempt-predicates nil))
+
 ; Git integration
 (use-package magit
   :commands (magit magit-status magit-init))
@@ -61,6 +91,12 @@
 ; Command completion
 (use-package vertico
   :init (vertico-mode))
+
+; Drag mode
+(use-package drag-stuff
+  :init (drag-stuff-global-mode)
+  :config
+  (drag-stuff-define-keys))
 
 ; Better completion finding
 (use-package orderless
@@ -78,7 +114,7 @@
 (use-package treemacs
   :commands (treemacs)
   :bind (:map pan-leader-map
-	      ("t" . treemacs)))
+	      ("C-t" . treemacs)))
 
 ; Color theme
 (use-package doom-themes
@@ -110,15 +146,13 @@
 ; Org mode comments
 (use-package poporg
   :bind (:map pan-leader-map
-	      ("\"" . poporg-dwim)))
+	      ("C-\"" . poporg-dwim)))
   
 ; Colored buffers (*compilation*)
 (use-package xterm-color
-  :hook (compilation-filter-hook
-	 .
-	 (lambda ()
-           (let ((inhibit-only-read t))
-             (ansi-color-apply-on-region compilation-filter-start (point)))))
+  :hook (compilation-filter-hook . (lambda ()
+                                     (let ((inhibit-only-read t))
+                                       (ansi-color-apply-on-region compilation-filter-start (point)))))
   :config
   (setq compilation-environment '("TERM=xterm-256color")))
 
@@ -127,12 +161,28 @@
   :demand t
   :config (which-key-mode))
 
-;; LSP mode setup
+;; Languages setup
+; Treesitter auto-installation
+(use-package treesit-auto
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
+
+; Flycheck errors
+(use-package flycheck
+  :hook (after-init . global-flycheck-mode))
+
 ; Ada
 (use-package ada-ts-mode
   :mode ("\\.ads\\'" "\\.adb\\'"))
 (use-package gpr-ts-mode
   :mode ("\\.gpr\\'"))
+
+; Rust
+(use-package rust-ts-mode
+  :mode ("\\.rs\\'"))
 
 ; Snippets
 (use-package yasnippet
@@ -143,15 +193,20 @@
 (use-package lsp-mode
   :commands lsp
   :hook ((ada-ts-mode
-	  gpr-ts-mode) . lsp)
+	      gpr-ts-mode
+          rust-ts-mode) . lsp)
   :bind (:map pan-leader-map
-	      ("f" . lsp-format-buffer)
-	      ("s d" . lsp-find-definition)
-	      ("s i" . lsp-find-implementation)
-	      ("s r" . lsp-find-references)
-	      ("l r" . lsp-rename)
-	      ("l a" . lsp-execute-code-action)
-	      ("k" . lsp-ui-doc-glance)))
+	      ("C-f" . lsp-format-buffer)
+	      ("C-s C-d" . lsp-find-definition)
+	      ("C-s C-i" . lsp-find-implementation)
+	      ("C-s C-r" . lsp-find-references)
+	      ("C-l C-r" . lsp-rename)
+	      ("C-l C-a" . lsp-execute-code-action)
+	      ("C-k" . lsp-ui-doc-glance)))
+
+(use-package lsp-ui
+  :after lsp
+  :hook (lsp . lsp-ui))
 
 ;; Document formats
 ; Org mode
@@ -164,12 +219,12 @@
 (use-package auctex
   :hook (LaTeX-mode . company-mode)
   :bind (:map pan-leader-map
-	      ("x a" . preview-document)
-	      ("x A" . preview-clearout-document)
-	      ("x h" . preview-at-point)
-	      ("x H" . preview-clearout-at-point)
-	      ("x v" . TeX-view)
-	      ("x c" . my/latex-compile))
+	      ("C-x C-a" . preview-document)
+	      ("C-x C-A" . preview-clearout-document)
+	      ("C-x C-h" . preview-at-point)
+	      ("C-x C-H" . preview-clearout-at-point)
+	      ("C-x C-v" . TeX-view)
+	      ("C-x C-c" . my/latex-compile))
   :config
   (defun my/latex-compile () (interactive) (TeX-command "LaTeX" 'TeX-master-file -1)))
 
