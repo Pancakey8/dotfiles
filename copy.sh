@@ -9,6 +9,8 @@ cp -r ~/.config/dunst/ .
 cp -r ~/.config/nvim/ .
 cp -r ~/.config/wallpaper.png .
 mkdir ./.emacs.d
+mkdir ./.emacs.d/acsl
 cp ~/.emacs.d/init.el ./.emacs.d/init.el
+cp ~/.emacs.d/acsl/acsl.el ./.emacs.d/acsl/acsl.el
 mkdir ./.emacs.d.old
 cp ~/.emacs.d.old/init.el ./.emacs.d.old/init.el

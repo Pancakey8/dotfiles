@@ -1,0 +1,3 @@
+#!/bin/bash
+current=$(setxkbmap -query | grep layout | awk '{print $2}')
+echo "$current"

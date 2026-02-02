@@ -154,6 +154,9 @@ Print
 ctrl + Print
     flameshot full -c
 
+super + a
+    ~/.config/sxhkd/keyboard.sh
+
 # super + v
 #     bspc node -f | xargs -I{} bspc node {} --state hidden
 # 

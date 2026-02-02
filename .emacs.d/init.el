@@ -50,7 +50,7 @@
 
 ; Font
 (set-face-attribute 'default nil
-		    :family "Iosevka Mono"
+		    :family "Iosevka"
 		    :height 120)
 
 ; Leader key
@@ -87,6 +87,10 @@
 ; Git integration
 (use-package magit
   :commands (magit magit-status magit-init))
+
+; Subword
+(use-package syntax-subword
+  :init (global-syntax-subword-mode))
 
 ; Command completion
 (use-package vertico
@@ -150,9 +154,7 @@
   
 ; Colored buffers (*compilation*)
 (use-package xterm-color
-  :hook (compilation-filter-hook . (lambda ()
-                                     (let ((inhibit-only-read t))
-                                       (ansi-color-apply-on-region compilation-filter-start (point)))))
+  :hook (compilation-filter-hook . xterm-color-filter)
   :config
   (setq compilation-environment '("TERM=xterm-256color")))
 
@@ -184,6 +186,16 @@
 (use-package rust-ts-mode
   :mode ("\\.rs\\'"))
 
+; Frama-C
+(use-package acsl
+  :load-path "~/.emacs.d/acsl/"
+  :commands acsl-mode)
+
+; Meson
+(use-package meson-mode
+  :mode ("\\(?:^\\|/\\)meson\\.build\\'")
+  :hook (meson-mode . company-mode))
+
 ; Snippets
 (use-package yasnippet
   :config
@@ -194,7 +206,10 @@
   :commands lsp
   :hook ((ada-ts-mode
 	      gpr-ts-mode
-          rust-ts-mode) . lsp)
+          rust-ts-mode
+          c-ts-mode
+          c++-ts-mode
+          LaTeX-mode) . lsp)
   :bind (:map pan-leader-map
 	      ("C-f" . lsp-format-buffer)
 	      ("C-s C-d" . lsp-find-definition)
@@ -202,7 +217,9 @@
 	      ("C-s C-r" . lsp-find-references)
 	      ("C-l C-r" . lsp-rename)
 	      ("C-l C-a" . lsp-execute-code-action)
-	      ("C-k" . lsp-ui-doc-glance)))
+	      ("C-k" . lsp-ui-doc-glance))
+  :config
+  (add-to-list 'lsp-language-id-configuration '(acsl-mode . "c")))
 
 (use-package lsp-ui
   :after lsp
@@ -213,7 +230,14 @@
 (use-package org
   :mode (("\\.org\'" . org-mode))
   :config
-  (plist-put org-format-latex-options :scale 1.5))
+  (plist-put org-format-latex-options :scale 1.5)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((gnuplot . t))))
+
+(use-package gnuplot
+  :after org
+  (setq org-startup-with-inline-images t))
 
 ; Latex
 (use-package auctex
@@ -265,6 +289,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(TeX-view-program-selection
+   '(((output-dvi has-no-display-manager) "dvi2tty")
+     ((output-dvi style-pstricks) "dvips and gv") (output-dvi "xdvi")
+     (output-pdf "Okular") (output-html "xdg-open")))
  '(package-selected-packages nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -272,3 +300,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:background "#212121")))))
+
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+(put 'magit-clean 'disabled nil)
