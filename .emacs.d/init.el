@@ -112,7 +112,21 @@
   :init (marginalia-mode))
 
 ; Consult search
-(use-package consult)
+(use-package consult
+  :bind (("C-s" . consult-line)
+         ("C-x b" . consult-buffer)
+         ("C-x 4 b" . consult-buffer-other-window)
+         ("C-x 5 b" . consult-buffer-other-frame)
+         ("C-x t b" . consult-buffer-other-tab)))
+
+; Avy jumps
+(use-package avy
+  :bind (("M-g f" . avy-goto-char-timer)
+         ("M-g g" . avy-goto-line)
+         ("C-:" . avy-goto-char)
+         ("C-'" . avy-goto-char-2))
+  :config
+  (setq avy-timeout-seconds 0.1))
 
 ; File tree
 (use-package treemacs
@@ -162,6 +176,16 @@
 (use-package which-key
   :demand t
   :config (which-key-mode))
+
+; Parenthesis handling
+(use-package smartparens
+  :hook (prog-mode . smartparens-mode)
+  :config
+  (require 'smartparens-config))
+
+; Rainbow parenthesis
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; Languages setup
 ; Treesitter auto-installation
@@ -224,6 +248,12 @@
 (use-package lsp-ui
   :after lsp
   :hook (lsp . lsp-ui))
+
+; Debugging
+(use-package dape
+  :commands dape
+  :custom
+  (dape-buffer-window-arrangement 'gud))
 
 ;; Document formats
 ; Org mode
@@ -293,7 +323,12 @@
    '(((output-dvi has-no-display-manager) "dvi2tty")
      ((output-dvi style-pstricks) "dvips and gv") (output-dvi "xdvi")
      (output-pdf "Okular") (output-html "xdg-open")))
- '(package-selected-packages nil))
+ '(package-selected-packages
+   '(ada-ts-mode auctex company-math consult dape dashboard doom-themes drag-stuff
+                 esup flycheck gnuplot god-mode gpr-ts-mode iedit lsp-ui magit
+                 marginalia meson-mode moody orderless poporg rainbow-delimiters
+                 smartparens syntax-subword treemacs treesit-auto vertico
+                 xterm-color yasnippet)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
