@@ -113,7 +113,7 @@
 
 ; Consult search
 (use-package consult
-  :bind (("C-s" . consult-line)
+  :bind (("C-S-s" . consult-line)
          ("C-x b" . consult-buffer)
          ("C-x 4 b" . consult-buffer-other-window)
          ("C-x 5 b" . consult-buffer-other-frame)
