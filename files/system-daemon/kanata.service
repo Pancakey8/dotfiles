@@ -1,0 +1,15 @@
+[Unit]
+Description=Kanata keyboard remapper
+Documentation=https://github.com/jtroo/kanata
+After=graphical.target
+
+[Service]
+Type=simple
+User=pancake
+ExecStart=/home/pancake/.local/bin/kanata/kanata_linux_x64 -c /home/pancake/.config/kanata/kanata.kbd -n
+SupplementaryGroups=input uinput
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target

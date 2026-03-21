@@ -1,0 +1,381 @@
+<labwc_config>
+
+  <core>
+    <decoration>server</decoration>
+    <gap>0</gap>
+    <adaptiveSync>no</adaptiveSync>
+    <allowTearing>no</allowTearing>
+    <autoEnableOutputs>yes</autoEnableOutputs>
+    <reuseOutputMode>no</reuseOutputMode>
+    <xwaylandPersistence>no</xwaylandPersistence>
+    <primarySelection>yes</primarySelection>
+  </core>
+
+  <placement>
+    <policy>cascade</policy>
+  </placement>
+
+  <theme>
+    <name>PanTheme</name>
+    <!-- <icon>breeze</icon> -->
+    <fallbackAppIcon>labwc</fallbackAppIcon>
+    <cornerRadius>0</cornerRadius>
+    <font place="ActiveWindow">
+      <name>Inter</name>
+      <size>10</size>
+      <slant>normal</slant>
+      <weight>bold</weight>
+    </font>
+    <font place="InactiveWindow">
+      <name>Inter</name>
+      <size>10</size>
+      <slant>normal</slant>
+      <weight>normal</weight>
+    </font>
+    <font place="MenuHeader">
+      <name>Inter</name>
+      <size>10</size>
+      <slant>normal</slant>
+      <weight>normal</weight>
+    </font>
+    <font place="MenuItem">
+      <name>Inter</name>
+      <size>10</size>
+      <slant>normal</slant>
+      <weight>normal</weight>
+    </font>
+    <font place="OnScreenDisplay">
+      <name>Inter</name>
+      <size>10</size>
+      <slant>normal</slant>
+      <weight>normal</weight>
+    </font>
+  </theme>
+
+  <windowSwitcher preview="yes" outlines="yes" unshade="yes">
+    <osd show="yes" style="classic" output="all" thumbnailLabelFormat="%T" />
+    <fields>
+      <field content="icon" width="5%" />
+      <field content="desktop_entry_name" width="30%" />
+      <field content="title" width="65%" />
+    </fields>
+  </windowSwitcher>
+
+  <resistance>
+    <screenEdgeStrength>20</screenEdgeStrength>
+    <windowEdgeStrength>20</windowEdgeStrength>
+    <unSnapThreshold>20</unSnapThreshold>
+    <unMaximizeThreshold>150</unMaximizeThreshold>
+  </resistance>
+
+  <resize>
+    <popupShow>Never</popupShow>
+    <drawContents>yes</drawContents>
+    <minimumArea>8</minimumArea>
+  </resize>
+
+  <focus>
+    <followMouse>no</followMouse>
+    <followMouseRequiresMovement>yes</followMouseRequiresMovement>
+    <raiseOnFocus>no</raiseOnFocus>
+  </focus>
+
+  <snapping>
+    <range inner="10" outer="10" />
+    <cornerRange>50</cornerRange>
+    <overlay enabled="yes">
+      <delay inner="250" outer="250" />
+    </overlay>
+    <topMaximize>yes</topMaximize>
+    <notifyClient>always</notifyClient>
+  </snapping>
+
+  <desktops>
+    <popupTime>1000</popupTime>
+    <names>
+      <name>I</name>
+      <name>II</name>
+      <name>III</name>
+      <name>IV</name>
+      <name>V</name>
+    </names>
+  </desktops>
+
+  <regions>
+    <region name="top-left"     x="0%"  y="0%"  height="50%"  width="50%"  />
+    <region name="top"          x="0%"  y="0%"  height="50%"  width="100%" />
+    <region name="top-right"    x="50%" y="0%"  height="50%"  width="50%"  />
+    <region name="left"         x="0%"  y="0%"  height="100%" width="50%"  />
+    <region name="center"       x="10%" y="10%" height="80%"  width="80%"  />
+    <region name="right"        x="50%" y="0%"  height="100%" width="50%"  />
+    <region name="bottom-left"  x="0%"  y="50%" height="50%"  width="50%"  />
+    <region name="bottom"       x="0%"  y="50%" height="50%"  width="100%" />
+    <region name="bottom-right" x="50%" y="50%" height="50%"  width="50%"  />
+  </regions>
+
+  <keyboard>
+
+    <layoutScope>global</layoutScope>
+    <repeatRate>25</repeatRate>
+    <repeatDelay>600</repeatDelay>
+    <keybind key="W-Tab">
+      <action name="NextWindow" />
+    </keybind>
+    <keybind key="W-S-Tab">
+      <action name="PreviousWindow" />
+    </keybind>
+    <keybind key="W-Return">
+      <action name="Execute" command="foot" />
+    </keybind>
+    <keybind key="W-Space">
+      <action name="Execute" command="fuzzel" />
+    </keybind>
+    <keybind key="W-q">
+      <action name="Close" />
+    </keybind>
+    <keybind key="W-a">
+      <action name="ToggleMaximize" />
+    </keybind>
+    <keybind key="W-m">
+      <action name="ToggleMagnify" />
+    </keybind>
+    <keybind key="W-x">
+      <action name="ShowMenu" menu="root-menu" />
+    </keybind>
+    <keybind key="W-c">
+      <action name="ShowMenu" menu="client-menu" />
+    </keybind>
+    <keybind key="W-Left">
+      <action name="SnapToEdge" direction="left" combine="yes" />
+    </keybind>
+    <keybind key="W-Right">
+      <action name="SnapToEdge" direction="right" combine="yes" />
+    </keybind>
+    <keybind key="W-Up">
+      <action name="SnapToEdge" direction="up" combine="yes" />
+    </keybind>
+    <keybind key="W-Down">
+      <action name="SnapToEdge" direction="down" combine="yes" />
+    </keybind>
+    <keybind key="XF86_AudioLowerVolume">
+      <action name="Execute" command="wpctl set-volume @DEFAULT_SINK@ 5%-" />
+    </keybind>
+    <keybind key="XF86_AudioRaiseVolume">
+      <action name="Execute" command="wpctl set-volume @DEFAULT_SINK@ 5%+" />
+    </keybind>
+    <keybind key="XF86_AudioMute">
+      <action name="Execute" command="wpctl set-mute @DEFAULT_SINK@ toggle" />
+    </keybind>
+    <keybind key="XF86_MonBrightnessUp">
+      <action name="Execute" command="brightnessctl set +10%" />
+    </keybind>
+    <keybind key="XF86_MonBrightnessDown">
+      <action name="Execute" command="brightnessctl set 10%-" />
+    </keybind>
+    <keybind key="W-KP_7">
+      <action name="SnapToRegion" region="top-left" />
+    </keybind>
+    <keybind key="W-KP_8">
+      <action name="SnapToRegion" region="top" />
+    </keybind>
+    <keybind key="W-KP_9">
+      <action name="SnapToRegion" region="top-right" />
+    </keybind>
+    <keybind key="W-KP_4">
+      <action name="SnapToRegion" region="left" />
+    </keybind>
+    <keybind key="W-KP_5">
+      <action name="SnapToRegion" region="center" />
+    </keybind>
+    <keybind key="W-KP_6">
+      <action name="SnapToRegion" region="right" />
+    </keybind>
+    <keybind key="W-KP_1">
+      <action name="SnapToRegion" region="bottom-left" />
+    </keybind>
+    <keybind key="W-KP_2">
+      <action name="SnapToRegion" region="bottom" />
+    </keybind>
+    <keybind key="W-KP_3">
+      <action name="SnapToRegion" region="bottom-right" />
+    </keybind>
+    <keybind key="W-,">
+      <action name="GoToDesktop" to="left" wrap="yes" />
+    </keybind>
+    <keybind key="W-.">
+      <action name="GoToDesktop" to="right" wrap="yes" />
+    </keybind>
+
+  </keyboard>
+
+  <mouse>
+
+    <doubleClickTime>500</doubleClickTime>
+
+    <context name="Frame">
+      <mousebind button="W-Left" action="Press">
+        <action name="Focus" />
+        <action name="Raise" />
+      </mousebind>
+      <mousebind button="W-Left" action="Drag">
+        <action name="Move" />
+      </mousebind>
+      <mousebind button="W-Right" action="Press">
+        <action name="Focus" />
+        <action name="Raise" />
+      </mousebind>
+      <mousebind button="W-Right" action="Drag">
+        <action name="Resize" />
+      </mousebind>
+    </context>
+
+    <context name="Border">
+      <mousebind button="Left" action="Press">
+        <action name="Focus" />
+        <action name="Raise" />
+      </mousebind>
+      <mousebind button="Left" action="Drag">
+        <action name="Resize" />
+      </mousebind>
+    </context>
+
+    <context name="TitleBar">
+      <mousebind button="Left" action="Press">
+        <action name="Focus" />
+        <action name="Raise" />
+      </mousebind>
+      <mousebind button="Right" action="Click">
+        <action name="Focus" />
+        <action name="Raise" />
+      </mousebind>
+      <mousebind direction="Up" action="Scroll">
+        <action name="Unshade" />
+        <action name="Focus" />
+      </mousebind>
+      <mousebind direction="Down" action="Scroll">
+        <action name="Unfocus" />
+        <action name="Shade" />
+      </mousebind>
+    </context>
+
+    <context name="Title">
+      <mousebind button="Left" action="Drag">
+        <action name="Move" />
+      </mousebind>
+      <mousebind button="Left" action="DoubleClick">
+        <action name="ToggleMaximize" />
+      </mousebind>
+      <mousebind button="Right" action="Click">
+        <action name="ShowMenu" menu="client-menu" />
+      </mousebind>
+    </context>
+
+    <context name="Maximize">
+      <mousebind button="Left" action="Click">
+        <action name="ToggleMaximize" />
+      </mousebind>
+      <mousebind button="Right" action="Click">
+        <action name="ToggleMaximize" direction="horizontal" />
+      </mousebind>
+      <mousebind button="Middle" action="Click">
+        <action name="ToggleMaximize" direction="vertical" />
+      </mousebind>
+    </context>
+
+    <context name="WindowMenu">
+      <mousebind button="Left" action="Click">
+        <action name="ShowMenu" menu="client-menu" atCursor="no" />
+      </mousebind>
+      <mousebind button="Right" action="Click">
+        <action name="ShowMenu" menu="client-menu" atCursor="no" />
+      </mousebind>
+    </context>
+
+    <context name="Icon">
+      <mousebind button="Left" action="Click">
+        <action name="ShowMenu" menu="client-menu" atCursor="no" />
+      </mousebind>
+      <mousebind button="Right" action="Click">
+        <action name="ShowMenu" menu="client-menu" atCursor="no" />
+      </mousebind>
+    </context>
+
+    <context name="Shade">
+      <mousebind button="Left" action="Click">
+        <action name="ToggleShade" />
+      </mousebind>
+    </context>
+
+    <context name="AllDesktops">
+      <mousebind button="Left" action="Click">
+        <action name="ToggleOmnipresent" />
+      </mousebind>
+    </context>
+
+    <context name="Iconify">
+      <mousebind button="Left" action="Click">
+        <action name="Iconify" />
+      </mousebind>
+    </context>
+
+    <context name="Close">
+      <mousebind button="Left" action="Click">
+        <action name="Close" />
+      </mousebind>
+    </context>
+
+    <context name="Client">
+      <mousebind button="Left" action="Press">
+        <action name="Focus" />
+        <action name="Raise" />
+      </mousebind>
+      <mousebind button="Middle" action="Press">
+        <action name="Focus" />
+        <action name="Raise" />
+      </mousebind>
+      <mousebind button="Right" action="Press">
+        <action name="Focus" />
+        <action name="Raise" />
+      </mousebind>
+    </context>
+
+    <context name="Root">
+      <mousebind button="Left" action="Press">
+        <action name="ShowMenu" menu="root-menu" />
+      </mousebind>
+      <mousebind button="Right" action="Press">
+        <action name="ShowMenu" menu="root-menu" />
+      </mousebind>
+      <mousebind button="Middle" action="Press">
+        <action name="ShowMenu" menu="root-menu" />
+      </mousebind>
+      <mousebind direction="Up" action="Scroll">
+        <action name="GoToDesktop" to="left" wrap="yes" />
+      </mousebind>
+      <mousebind direction="Down" action="Scroll">
+        <action name="GoToDesktop" to="right" wrap="yes" />
+      </mousebind>
+    </context>
+
+  </mouse>
+
+  <libinput>
+    <device identifier="ELAN1203:00 04F3:307A Touchpad">
+      <sendEventsMode>disabledOnExternalMouse</sendEventsMode>
+    </device>
+  </libinput>
+
+  <menu>
+    <ignoreButtonReleasePeriod>250</ignoreButtonReleasePeriod>
+    <showIcons>yes</showIcons>
+  </menu>
+
+  <magnifier>
+    <width>400</width>
+    <height>400</height>
+    <initScale>2.0</initScale>
+    <increment>0.2</increment>
+    <useFilter>yes</useFilter>
+  </magnifier>
+
+</labwc_config>

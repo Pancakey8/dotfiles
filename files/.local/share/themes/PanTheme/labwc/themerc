@@ -1,0 +1,56 @@
+border.width: 2
+
+window.titlebar.padding.width: 10
+window.titlebar.padding.height: 3
+
+window.active.border.color: #202020
+window.inactive.border.color: #cacaca
+
+window.active.title.bg.color: #fcfcfc
+window.inactive.title.bg.color: #efefef
+window.*.title.bg: Solid
+
+window.active.label.text.color: #202020
+window.inactive.label.text.color: #7d7d7d
+window.label.text.justify: center
+
+window.button.width: 26
+window.button.height: 26
+window.button.spacing: 0
+
+window.button.hover.bg.color: #80808020
+window.button.hover.bg.corner-radius: 0
+
+window.*.button.unpressed.image.color: #000000
+
+window.active.button.close.unpressed.image.color: #d8463e
+window.active.button.max.unpressed.image.color: #eadb56
+window.active.button.iconify.unpressed.image.color: #58dd75
+
+menu.items.padding.x: 12
+menu.items.padding.y: 8
+
+osd.bg.color: #fcfcfc
+osd.border.color: #202020
+osd.border.width: 2
+osd.label.text.color: #202020
+
+osd.window-switcher.item.padding.y: 8
+
+osd.window-switcher.preview.border.width: 4
+osd.window-switcher.preview.border.color: #99c5ff
+
+# Default values for following options change depending on the rendering
+# backend. For software-based renderers, *.bg.enabled is "no" and
+# *.border.enabled is "yes" if not set. For hardware-based renderers,
+# *.bg.enabled is "yes" and *.border.enabled is "no" if not set.
+# Setting *.bg.enabled to "yes" for software-based renderer with translucent
+# background color may severely impact performance.
+#
+# snapping.overlay.region.bg.enabled:
+# snapping.overlay.edge.bg.enabled:
+# snapping.overlay.region.border.enabled:
+# snapping.overlay.edge.border.enabled:
+
+snapping.overlay.*.bg.color: #99c5ff5f
+snapping.overlay.*.border.width: 0

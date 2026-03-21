@@ -1,0 +1,1 @@
+/home/pancake/.emacs.d/init.el
