@@ -11,7 +11,7 @@
    ((class color) (min-colors 256)))
    (my-bg         "#fcfcfc")
    (my-bg-alt     "#cacaca")
-   (my-disabled   "#dfdfdf")
+   (my-disabled   "#7d7d7d")
    (my-text       "#202020")
    (my-blue       "#8cb2e2")
    (my-red        "#d8463e")

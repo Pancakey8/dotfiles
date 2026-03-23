@@ -43,6 +43,8 @@
 		    :family "Iosevka Nerd Font Mono"
 		    :height 120)
 
+(setq org-agenda-files '("~/Documents/Agenda/"))
+
 (use-package treemacs
   :commands (treemacs)
   :bind (:map pan-leader-map
@@ -99,6 +101,11 @@
 
 (use-package autothemer
   :ensure t)
+
+(use-package tramp
+  :defer t
+  :config
+  (tramp-enable-method "distrobox"))
 
 (use-package pancake-theme
   :ensure nil
