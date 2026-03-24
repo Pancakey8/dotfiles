@@ -205,6 +205,12 @@
     <keybind key="W-.">
       <action name="GoToDesktop" to="right" wrap="yes" />
     </keybind>
+    <keybind key="W-S-,">
+      <action name="SendToDesktop" to="left" wrap="yes" />
+    </keybind>
+    <keybind key="W-S-.">
+      <action name="SendToDesktop" to="right" wrap="yes" />
+    </keybind>
 
   </keyboard>
 
