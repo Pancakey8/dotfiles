@@ -1,0 +1,6 @@
+This folder goes under /usr/share/sddm/themes/
+
+Select in sddm config
+
+[Theme]
+Current=pan-sddm

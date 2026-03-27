@@ -60,6 +60,18 @@
     (cons 'transient dir))
   (add-hook 'project-find-functions #'my/project-local-dir 100))
 
+(use-package exec-path-from-shell
+  :demand t
+  :config
+  (when (or (memq window-system '(mac ns x pgtk))
+            (daemonp))
+    (setq exec-path-from-shell-variables
+          '("PATH"
+            "MANPATH"
+            "CAML_LD_LIBRARY_PATH"
+            "OPAM_SWITCH_PREFIX"))
+    (exec-path-from-shell-initialize)))
+
 (use-package syntax-subword
   :config
   (global-syntax-subword-mode))
@@ -156,6 +168,25 @@
 (use-package cmake-ts-mode
   :mode (("CMakeLists\\.txt\\'" . cmake-ts-mode)
          ("\\.cmake\\'"         . cmake-ts-mode)))
+
+(use-package neocaml
+  :ensure t
+  :config
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs
+                 '((neocaml-mode neocaml-interface-mode) . ("ocamllsp")))))
+
+(use-package utop
+  :ensure t
+  :after neocaml
+  :hook (neocaml-mode . utop-minor-mode))
+
+(use-package ocaml-eglot
+  :ensure t
+  :after neocaml
+  :hook
+  (neocaml-mode . ocaml-eglot)
+  (ocaml-eglot . eglot-ensure))
 
 (use-package eglot
   :hook ((c-ts-mode

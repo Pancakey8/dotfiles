@@ -207,6 +207,62 @@ Rectangle {
         }
     }
 
+    // --- Power Controls (Top Right) ---
+    RowLayout {
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.margins: 30
+        spacing: 15
+
+        // Restart Button
+        Button {
+            id: rebootButton
+            hoverEnabled: true
+            onClicked: sddm.reboot()
+            
+            contentItem: Text {
+                text: "" // FontAwesome sync/reboot icon
+                color: "#202020"
+                font.family: "FontAwesome"
+                font.pointSize: 16
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
+
+            background: Rectangle {
+                implicitWidth: 50
+                implicitHeight: 50
+                color: rebootButton.hovered ? "#eadb56" : "#fcfcfc"
+                border.color: "#202020"
+                border.width: 2
+            }
+        }
+
+        // Shutdown Button
+        Button {
+            id: shutdownButton
+            hoverEnabled: true
+            onClicked: sddm.powerOff()
+            
+            contentItem: Text {
+                text: "" // FontAwesome power icon
+                color: "#202020"
+                font.family: "FontAwesome"
+                font.pointSize: 16
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
+
+            background: Rectangle {
+                implicitWidth: 50
+                implicitHeight: 50
+                color: shutdownButton.hovered ? "#d8463e" : "#fcfcfc"
+                border.color: "#202020"
+                border.width: 2
+            }
+        }
+    }
+
     // Logic Functions
     function proceedToPassword() {
         if (inputField.text !== "") {
