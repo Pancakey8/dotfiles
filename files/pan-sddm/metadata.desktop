@@ -1,0 +1,10 @@
+[SddmGreeterTheme]
+MainScript=Main.qml
+Name=PanSddm
+Type=sddm-theme
+Description=Pancake's SDDM theme
+Version=0.1.0
+License=None
+Theme-Id=pan-sddm
+Theme-API=2.0
+QtVersion=6
