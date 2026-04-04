@@ -117,7 +117,8 @@
 (use-package tramp
   :defer t
   :config
-  (tramp-enable-method "distrobox"))
+  (tramp-enable-method "distrobox")
+  (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
 
 (use-package pancake-theme
   :ensure nil
@@ -154,9 +155,6 @@
   :config
   (setq mc/always-run-for-all t))
 
-(use-package flycheck
-  :hook (after-init . global-flycheck-mode))
-
 (setq major-mode-remap-alist
       '((c-mode . c-ts-mode)
         (c++-mode . c++-ts-mode)
@@ -188,11 +186,17 @@
   (neocaml-mode . ocaml-eglot)
   (ocaml-eglot . eglot-ensure))
 
+(use-package haskell-mode
+  :ensure t
+  :mode ("\\.hs\\'" . haskell-mode)
+  :hook (haskell-mode . interactive-haskell-mode))
+
 (use-package eglot
   :hook ((c-ts-mode
           c++-ts-mode
           csharp-ts-mode
-          cmake-ts-mode) . eglot-ensure)
+          cmake-ts-mode
+          haskell-mode) . eglot-ensure)
   :custom
   (eglot-autoshutdown t)
   (eglot-events-buffer-size 2000000)
@@ -204,10 +208,15 @@
               ("s i" . eglot-find-implementation)
               ("s d" . eglot-find-declaration)))
 
-(use-package flycheck-eglot
-  :after (flycheck eglot)
+(use-package flymake
+  :ensure nil
+  :hook (eglot-managed-mode . flymake-mode)
+  :bind (:map pan-leader-map
+              ("d n" . flymake-goto-next-error)
+              ("d p" . flymake-goto-prev-error)
+              ("d l" . flymake-show-buffer-diagnostics))
   :config
-  (global-flycheck-eglot-mode 1))
+  (setq flymake-fringe-indicator-position 'left-fringe))
 
 (use-package dape
   :commands dape
