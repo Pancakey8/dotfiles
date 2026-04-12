@@ -155,6 +155,9 @@
   :config
   (setq mc/always-run-for-all t))
 
+(use-package vterm
+  :ensure t)
+
 (setq major-mode-remap-alist
       '((c-mode . c-ts-mode)
         (c++-mode . c++-ts-mode)
