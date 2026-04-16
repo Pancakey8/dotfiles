@@ -214,6 +214,33 @@ Rectangle {
         anchors.margins: 30
         spacing: 15
 
+        // Hibernate Button
+        Button {
+            id: hibernateButton
+            hoverEnabled: true
+            // Check if sddm can actually hibernate before showing or enabling
+            visible: sddm.canHibernate 
+            onClicked: sddm.hibernate()
+            
+            contentItem: Text {
+                text: "" // FontAwesome snowflake or similar "freeze" icon
+                color: "#202020"
+                font.family: "FontAwesome"
+                font.pointSize: 16
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
+
+            background: Rectangle {
+                implicitWidth: 50
+                implicitHeight: 50
+                // Using a "cool" blue/purple for hibernate
+                color: hibernateButton.hovered ? "#b19cd9" : "#fcfcfc"
+                border.color: "#202020"
+                border.width: 2
+            }
+        }
+
         // Restart Button
         Button {
             id: rebootButton
