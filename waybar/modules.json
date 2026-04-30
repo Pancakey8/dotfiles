@@ -1,0 +1,49 @@
+{
+  "layer": "top",
+  "position": "left",
+  "width": 50,
+  "modules-left": ["tray", "wlr/taskbar"],
+  "modules-center": ["clock"],
+  "modules-right": ["backlight", "battery", "memory", "wireplumber"],
+
+  "wlr/taskbar": {
+    "format": "{icon}",
+    "icon-size": 20,
+    // "icon-theme": "Numix-Circle",
+    "tooltip-format": "{title}",
+    "on-click": "activate",
+    "on-click-middle": "close",
+  },
+
+  "clock": {
+    "interval": 60,
+    "format": "<span font_size='4800'> </span>\n{:%y\n%m\n%d\n\n<span font_size='4400'> </span>\n%H\n%M}"
+  },
+
+  "backlight": {
+    "device": "intel_backlight",
+    "format": "<span font_size='16000'> </span>{icon}\n{percent}",
+    "format-icons": ["", "", ""]
+  },
+
+  "battery": {
+    "interval": 30,
+    "states": {
+        "warning": 30,
+        "critical": 15
+    },
+    "format": "<span font_size='16000'> </span>{icon}\n{capacity}",
+    "format-icons": ["", "", "", "", ""]
+  },
+
+  "memory": {
+    "interval": 30,
+    "format": "<span font_size='4800'> </span>\n{}"
+  },
+
+  "wireplumber": {
+    "format": "<span font_size='4800'> </span>{icon}\n{volume}",
+    "format-muted": "<span font_size='4800'> </span>",
+    "format-icons": ["", "", ""]
+  }
+}

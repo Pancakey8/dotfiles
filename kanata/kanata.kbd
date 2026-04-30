@@ -1,0 +1,11 @@
+(defsrc
+  caps
+)
+
+(deflayer base
+  (tap-hold 150 200 bspc lctl)
+)
+
+(defcfg
+  process-unmapped-keys yes
+)
