@@ -90,7 +90,7 @@
       <action name="Execute" command="fuzzel" />
     </keybind>
     <keybind key="W-e">
-      <action name="Execute" command="dolphin" />
+      <action name="Execute" command="thunar" />
     </keybind>
     <keybind key="W-q">
       <action name="Close" />

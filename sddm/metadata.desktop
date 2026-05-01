@@ -1,0 +1,10 @@
+[SddmGreeterTheme]
+MainScript=Main.qml
+Name=Nord Light
+Type=sddm-theme
+Description=SDDM Nord Light
+Version=0.1.0
+License=None
+Theme-Id=nord-light
+Theme-API=2.0
+QtVersion=6

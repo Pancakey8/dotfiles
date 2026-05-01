@@ -1,4 +1,3 @@
-
 (require 'package)
 (setq package-archives
       '(("gnu"   . "https://elpa.gnu.org/packages/")
@@ -57,7 +56,8 @@
 (use-package vertico
   :demand t
   :config
-  (vertico-mode))
+  (vertico-mode)
+  (vertico-buffer-mode))
 
 (use-package drag-stuff
   :demand t
@@ -106,8 +106,8 @@
          ("C-c m p"       . mc/mark-pop)
          ("C-c C-<"       . mc/mark-all-like-this)
          ("C-S-<mouse-1>" . mc/add-cursor-on-click))
-  :config
-  (setq mc/always-run-for-all t))
+  :custom
+  (mc/always-run-for-all t))
 
 (use-package vterm
   :ensure t)
@@ -178,6 +178,28 @@
   (load-theme 'doom-nord-light t)
   (doom-themes-org-config))
 
+(use-package doom-modeline
+  :init (doom-modeline-mode 1)
+  :config
+  (setq doom-modeline-height 40))
+
+(use-package ace-window
+  :bind (("M-o" . ace-window)))
+
+(use-package emacs
+  :bind (("C-x C-2" . split-window-below)
+	 ("C-x C-3" . split-window-right)
+	 ("C-x C-0" . delete-window)
+	 ("C-x C-1" . delete-other-windows)
+	 ("C-x C-o" . other-window)
+	 ("C-x C-a" . maximize-window)
+	 ("C-x C-M-a" . minimize-window)))
+
+(use-package smartparens
+  :init (smartparens-mode 1)
+  :config
+  (require 'smartparens-config))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -186,7 +208,8 @@
  '(custom-safe-themes
    '("87fa3605a6501f9b90d337ed4d832213155e3a2e36a512984f83e847102a42f4"
      default))
- '(inhibit-startup-screen t))
+ '(inhibit-startup-screen t)
+ '(package-selected-packages nil))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
