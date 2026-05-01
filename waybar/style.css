@@ -54,6 +54,10 @@ window#waybar {
     border-top: solid 2px #2e3440;
 }
 
+#tray widget>image {
+    margin: 12px 0;
+}
+
 #taskbar button {
     padding: 10px 0;
 }
