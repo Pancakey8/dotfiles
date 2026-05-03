@@ -1,3 +1,5 @@
+dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=wlroots
+
 waybar >/dev/null 2>&1 &
 nm-applet >/dev/null 2>&1 &
 swaybg -i ~/.config/labwc/wallpaper.png -m fill 2>&1 &

@@ -196,7 +196,7 @@
 	 ("C-x C-M-a" . minimize-window)))
 
 (use-package smartparens
-  :init (smartparens-mode 1)
+  :init (smartparens-global-mode 1)
   :config
   (require 'smartparens-config))
 
@@ -206,7 +206,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("87fa3605a6501f9b90d337ed4d832213155e3a2e36a512984f83e847102a42f4"
+   '("42a6583a45e0f413e3197907aa5acca3293ef33b4d3b388f54fa44435a494739"
+     "87fa3605a6501f9b90d337ed4d832213155e3a2e36a512984f83e847102a42f4"
      default))
  '(inhibit-startup-screen t)
  '(package-selected-packages nil))

@@ -98,6 +98,9 @@
     <keybind key="W-a">
       <action name="ToggleMaximize" />
     </keybind>
+    <keybind key="W-S-a">
+      <action name="Iconify" />
+    </keybind>
     <keybind key="W-c">
       <action name="ShowMenu" menu="client-menu" atCursor="no" />
     </keybind>
