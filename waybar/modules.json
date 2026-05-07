@@ -22,8 +22,9 @@
 
   "backlight": {
     "device": "intel_backlight",
-    "format": "<span font_size='16000'> </span>{icon}\n{percent}",
-    "format-icons": ["", "", ""]
+    "format": "{icon}\n{percent}",
+    "format-icons": ["", "", ""],
+    "justify": "center"
   },
 
   "battery": {
@@ -32,18 +33,21 @@
         "warning": 30,
         "critical": 15
     },
-    "format": "<span font_size='16000'> </span>{icon}\n{capacity}",
+    "format": "{icon}<span font_size='16000'> </span>\n{capacity}",
+    "justify": "center",
     "format-icons": ["", "", "", "", ""]
   },
 
   "memory": {
     "interval": 30,
-    "format": "<span font_size='4800'> </span>\n{}"
+    "format": "<span font_size='16000'> </span>\n{}",
+    "justify": "center"
   },
 
   "wireplumber": {
-    "format": "<span font_size='4800'> </span>{icon}\n{volume}",
-    "format-muted": "<span font_size='4800'> </span>",
-    "format-icons": ["", "", ""]
+    "format": "{icon}\n{volume}",
+    "format-muted": "",
+    "format-icons": ["", "", ""],
+    "justify": "center"
   }
 }
